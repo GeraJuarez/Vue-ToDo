@@ -1,5 +1,5 @@
 <template>
-	<div>
+	<div>		
 		<h1>My TO DO app</h1>
 		<form @submit.prevent="addTask">
 			<input v-model="newTaskName" type="text">
@@ -29,29 +29,30 @@ export default {
 	data () {
 		return {
 			newTaskName:'',
-			tasks: [
-				{
-					name: 'Tarea 1',
-					done: false
-				},
-				{
-					name: 'Tarea 2',
-					done: false
-				},
-				{
-					name: 'Tarea 3',
-					done: false
-				}
-			]
+			tasks: [],
 		}
 	},
+	mounted: function() {
+		if (localStorage.getItem('tasks')) {
+			this.tasks = JSON.parse(localStorage.getItem('tasks'));
+		}
+	},
+	watch: {
+		tasks: {
+			handler() {
+				localStorage.setItem('tasks', JSON.stringify(this.tasks));
+			},
+			deep: true,
+		}
+  	},
 	methods: {
 		toggleTasks (task) {
 			task.done = !task.done
 		},
 		addTask () {
 			if (!this.newTaskName) return
-			this.tasks.push( {name:this.newTaskName, done:false} )
+			let taskObject = {name:this.newTaskName, done:false}
+			this.tasks.push( taskObject )
 			this.newTaskName = ''
 		}
 	},
