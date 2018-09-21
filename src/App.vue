@@ -1,28 +1,67 @@
 <template>
-  <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
-  </div>
+	<div>
+		<h1>My TO DO app</h1>
+		<form @submit.prevent="addTask">
+			<input v-model="newTaskName" type="text">
+			<input type="submit" value="Agrega tarea">
+		</form>
+
+		<task-list 
+		:title="'Pendientes Prueba'"
+		:task-list="tasksPending"
+		@completar="toggleTasks"/>
+		<hr>
+
+		<task-list 
+		:title="'Completados Prueba'"
+		:task-list="tasksComplete"
+		@completar="toggleTasks"/>
+	</div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import TaskList from './components/TaskList'
 
 export default {
-  name: 'app',
-  components: {
-    HelloWorld
-  }
+	components: {
+		TaskList
+	},
+	data () {
+		return {
+			newTaskName:'',
+			tasks: [
+				{
+					name: 'Tarea 1',
+					done: false
+				},
+				{
+					name: 'Tarea 2',
+					done: false
+				},
+				{
+					name: 'Tarea 3',
+					done: false
+				}
+			]
+		}
+	},
+	methods: {
+		toggleTasks (task) {
+			task.done = !task.done
+		},
+		addTask () {
+			if (!this.newTaskName) return
+			this.tasks.push( {name:this.newTaskName, done:false} )
+			this.newTaskName = ''
+		}
+	},
+	computed: {
+		tasksPending () {
+			return this.tasks.filter(task => !task.done)
+		},
+		tasksComplete () {
+			return this.tasks.filter(task => task.done)
+		}
+	}
 }
 </script>
-
-<style>
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
-</style>
