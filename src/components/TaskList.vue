@@ -1,11 +1,13 @@
 <template>
-    <div>
-        <h3>{{ title }}</h3>
+    <div class="collection with-header">
 		<ul>
-			<li v-for="(task, index) in taskList"
+            <li class="collection-header">
+                <h3>{{ title }}</h3>
+            </li>
+			<li class="collection-item" v-for="(task, index) in taskList"
 				:key="index">
 				{{ task.name }} - {{ task.done ? 'Complete' : 'Pendiente' }}
-				<button v-if="!task.done" type="button" @click="toggleTasks(task)">Completar</button>
+				<button class="btn-small secondary-content" v-if="!task.done" type="button" @click="toggleTasks(task)">Completar</button>
 			</li>
 		</ul>
     </div>

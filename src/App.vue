@@ -1,21 +1,29 @@
 <template>
-	<div>		
-		<h1>My TO DO app</h1>
-		<form @submit.prevent="addTask">
-			<input v-model="newTaskName" type="text">
-			<input type="submit" value="Agrega tarea">
-		</form>
+	<div class="container">
+		<div class="row">
+			<div class="col s6 offset-s3">
+				<h1 class="center-align">My TO DO app</h1>
+				<form class="center-align" @submit.prevent="addTask">
+					<input placeholder="Nueva tarea" id="task" v-model="newTaskName" type="text">
+					<input class="btn" type="submit" value="Agrega tarea">
+				</form>
+			</div>
+		</div>	
 
-		<task-list 
-		:title="'Pendientes Prueba'"
-		:task-list="tasksPending"
-		@completar="toggleTasks"/>
-		<hr>
-
-		<task-list 
-		:title="'Completados Prueba'"
-		:task-list="tasksComplete"
-		@completar="toggleTasks"/>
+		<div class="row">
+			<div class="col s6">
+				<task-list 
+				:title="'Pendientes Prueba'"
+				:task-list="tasksPending"
+				@completar="toggleTasks"/>
+			</div>
+			<div class="col s6">
+				<task-list 
+				:title="'Completados Prueba'"
+				:task-list="tasksComplete"
+				@completar="toggleTasks"/>	
+			</div>
+		</div>
 	</div>
 </template>
 
